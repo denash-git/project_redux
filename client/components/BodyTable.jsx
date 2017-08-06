@@ -22,7 +22,7 @@ export const BodyTable = ({body, id, click, change}) => {
 					onClick={click} >
 
 					{(id === (elem[0]+''+cell)) ?
-						<input className='focus' onChange={change} value={item} />: item}
+						<input className='focus' onKeyDown={change} defaultValue={item} />: item}
 				
 				</td>)}
 				</tr>)}

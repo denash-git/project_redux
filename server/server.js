@@ -1,15 +1,16 @@
-var express = require('express');
-var path = require('path');
-var app = express();
-var bodyParser = require('body-parser');
+var express = require('express'),
+	path = require('path'),
+	app = express(),
+	bodyParser = require('body-parser'),
+	db = require('./mybasedata/index.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', express.static(path.join(__dirname, '../public/')));
+app.get('/table', require('./routes/index.js'));
 
 app.get('*', (req, res) => {res.sendFile(path.join(__dirname, '../public/index.html'))});
 
-
-app.listen(3000, function() {
-	console.log('server on ' + 3000);
+db.connect(() => {
+    app.listen(3000,console.log('Server on 3000'));
 });

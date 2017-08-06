@@ -1,4 +1,5 @@
-import { MOVE } from '../consts/index.js';
+import { MOUSE, KEYBOARD } from '../consts/index.js';
+
 
 const initialState = {
     setting_table: [
@@ -41,56 +42,65 @@ const initialState = {
 };
 
 export const Reducer = (state = initialState, action) => {
+
     switch(action.type) {
-        case CHANGE:
 
-            const type = ["number", "string", "number", "number", "number"]; //тип полей таблицы,
-            //инф будет запрашиваться с сервера
-            let {active} = state; //активная ячейка
-            let {table_sale} = state; //активная таблица(будем запрашивать с сервера)
+        case KEYBOARD.ENTER:
+            console.log("enter");
+            return state;
 
-            let key = e.target.value; //слушаем клавиатуру
+        case KEYBOARD.TAB:
+            console.log("TAB");
+            return state;
 
+        case KEYBOARD.KEY_UP:
+            console.log("UP");
+            return state;
 
-
-            let keyType=""; //тип нажатой кнопки
-            if ( !isNaN(key) ) {keyType="number"} else keyType="string";
-
-            //проверка соответствует ли типу ячейки
-            if (keyType === type[active.cell]) {
-                table_sale[active.row][active.cell] = key; //изменение инф в тек ячейке
-                return Odject.assign({}, state, {table_sale: table_sale});
-            } else return state;
+        case KEYBOARD.VALUE:
+            const key = action.value.value; //текущий нажатый символ
+            let {active} = state.active; //данные активной ячейки
+            let {table_sale} = state;
+            console.log(active);
+            table_sale[active.row][active.cell] = key;
+            return Object.assign({}, state, {table_sale});
+            //     console.log(key);
+            // //проверка соответствует ли типу ячейки
+            // if (action.keyType === active.type) {
+            //     console.log(action.keyType, "тип");
+            //     table_sale[active.row][active.cell] = key; //изменение инф в тек ячейке
+            //     return Object.assign({}, state, {table_sale});
+            // } else return state;
 
         // !!внимание: добавить, если заполнится последняя строка, добавить следующую
 
 
-        case CLICK:
-
+        case MOUSE.CLICK:
+            let vol = action.e.target;  //ловим событие
             let {setting_table}=state; //настройки таблицы
 
-            const id = e.target.id;//id активной ячейки
-            const table = e.target.parentNode.parentNode.parentNode.id; //имя таблицы
-            const row = e.target.parentNode.rowIndex;	//строка
-            const cell = e.target.cellIndex;	//ячека
-
-            console.log(id, table, row, cell);
-            //определить настройки ячеек по имени таблицы, потом будет это на сервере
-            const find = setting_table.findIndex(setting_table => setting_table.name === table);
-            console.log(find);
+            //определяем координаты клика
+            const id = vol.id;  //id  ячейки
+            const table = vol.parentNode.parentNode.parentNode.id;  //имя таблицы
+            const row = vol.parentNode.rowIndex; //строка
+            const cell = vol.cellIndex; //ячека
+            console.log(table)
+            //определить настройки ячеек по имени таблицы
+            const find = setting_table.findIndex(setting_table => setting_table.name === table); //нашли позицию
             const _profil = setting_table[find].profil;
-            console.log(_profil);
-
-            //обобщенный объект с данными
-             active = {
-                id: id,
-                row: row,
-                cell: cell,
-                table: table
-            };
+            const type = setting_table[find].type[cell];
 
             //если ячейку можно редактировать =>сделать активной
             if (_profil[cell] === 1) {
+                console.log("сработало")
+                //объект с инфо активной ячейки
+                active = {
+                    id: id,
+                    row: row,
+                    cell: cell,
+                    table: table,
+                    type: type
+                };
                 return Object.assign({}, state, {active});
             } else {
                 return state
