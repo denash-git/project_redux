@@ -8,8 +8,9 @@ const initialState = {
             profil: [ 1, 1, 1, 0]
         },
         {
-            name: "opt",
-            profil: [0, 1, 1]
+            name: "begin",
+            profil: [0, 1, 1],
+            type: ["number", "number", "number"]
         },
         {
             name: "sale",
@@ -17,6 +18,16 @@ const initialState = {
             type: ["number", "string", "number", "number", "number"]
         }
 
+    ],
+
+    table_begin: [
+        ['Номинал', 'Количество', 'Сумма'],
+        [5000, 2, 0],
+        [1000, null, 0],
+        [500, null, 0],
+        [100, null, 0],
+        [50, 3, 0],
+        ['мелочь', null, 0]
     ],
 
     table_sale: [

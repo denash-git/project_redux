@@ -10,8 +10,6 @@ import App_begin from './list1/App_begin.jsx';
 
 
 const store = createStore(Reducer);
-//console.log('Store init state', store.getState());
-
 
     render(
         <Provider store={store}>

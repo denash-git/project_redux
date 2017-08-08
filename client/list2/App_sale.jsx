@@ -17,11 +17,9 @@ class App_sale extends React.Component {
 		super(props);
 	}
 
-
 	// componentDidMount() {	
 	// }
-	
-	
+
 	render() {
 		let {table_sale} = this.props;
 		let {active}= this.props;  //активная ячейка, для активации инпута
@@ -30,7 +28,6 @@ class App_sale extends React.Component {
 
         return (
 			<div className="container col-7 row">
-
 
 				<h4>Продажи</h4>
 
