@@ -6,20 +6,21 @@ const express = require('express'),
 //fd = path.join(__dirname, '../mybasedata/db_file.js');
 //let userList = readData();
 
-// запрос итого таблицы
+// запрос итого таблицы по name
 router.get('/amount/:name', (req, res) => {
 
 	let name = req.params.name;
     Models.getAmount(name).then(answer =>{
-    	let amount = answer[0]
+    	let amount = answer[0];
         res.send(amount);
-        console.log(amount)
     })
 });
 
-//запрос на body таблицы, пока на sale
-router.get('/table', (req, res) => {
-    Models.getTable().then(table => {
+//запрос на body таблицы, указанной в name
+router.get('/table/:name', (req, res) => {
+
+	let name = req.params.name;
+    Models.getTable(name).then(table => {
         //преобразование из массива объектов, в двумерный массив.
     	let body = [],
         	bodyTemp = [],
@@ -32,7 +33,7 @@ router.get('/table', (req, res) => {
 			}
 			body.push(bodyTemp);
 		});
-		//res.send(body);
+		res.send(body);
 		console.log(body);
     });
 });

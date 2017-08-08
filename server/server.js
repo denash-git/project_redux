@@ -7,7 +7,7 @@ var express = require('express'),
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', express.static(path.join(__dirname, '../public/')));
-app.get('/table', require('./routes/index.js'));
+app.get('/table/:name', require('./routes/index.js'));
 app.get('/setting', require('./routes/index.js'));
 app.get('/amount/:name', require('./routes/index.js'));
 

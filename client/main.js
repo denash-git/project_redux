@@ -26,3 +26,12 @@ const store = createStore(Reducer);
 store.subscribe(()=> {
     console.log('Store subscribe: ', store.getState());
 });
+
+
+/*
+// запрос итог таблицы вместо sale передать имя таблицы. приходит объект с свойством amount
+getAmount('sale').then(amount => {
+			let result = JSON.parse(amount);
+			console.log('сумма sale: ', result.amount)
+		})
+ */
