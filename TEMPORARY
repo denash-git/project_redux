@@ -1,0 +1,26 @@
+//запрос body таблицы по имени
+let name = 'sale';
+getTable(name).then(table => {
+    let result = JSON.parse(table);
+    console.log('таблица: ',result)
+});
+
+
+//запрос итого таблицы. приходит объект с свойством amount
+let name = 'begin';
+getAmount(name).then(amount => {
+    let result = JSON.parse(amount);
+    console.log('сумма sale: ', result.amount)
+});
+
+
+//запрос настроек таблиц (всех)
+//для доступа к ключам type, head объектов применить .split(',') для образования массива
+//для ключа profil в массиве -цифры получаются в кавычках !? учесть
+getSetting().then(setting => {
+    let result = JSON.parse(setting);
+    console.log('настройки: ', result[0].profil.split(','));
+    console.log('настройки: ', result[0].type.split(','));
+    console.log('настройки: ', result[0].head.split(','));
+    console.log('настройки: ', result) //result уже массив объектов
+});

@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 
-import { getAmount, getTable } from './../requests/index.js';
+import { getAmount, getTable, getSetting } from './../requests/index.js';
 
 import { HeadTable } from './../components/HeadTable.jsx';
 import { BodyTable } from './../components/BodyTable.jsx';
 import { act } from './../actions/index.js';
+
 
 
 const mapStateToProps = (state) => (state);
@@ -22,17 +23,7 @@ class App_begin extends React.Component {
 	}
 
 	componentDidMount() {
-		//запрос body таблицы по имени
-		getTable('begin').then(table => {
-			let result = JSON.parse(table);
-			console.log('таблица: ',result)
-		});
 
-        // запрос итог таблицы вместо sale передать имя таблицы. приходит объект с свойством amount
-        getAmount('begin').then(amount => {
-            let result = JSON.parse(amount);
-            console.log('сумма sale: ', result.amount)
-        })
 	}
 
 	render() {

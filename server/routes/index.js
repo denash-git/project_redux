@@ -42,11 +42,15 @@ router.get('/table/:name', (req, res) => {
 router.get('/setting', (req, res) => {
 
 	Models.getSetting().then(setting =>{
-		console.log(setting);
+		res.send(setting);
 	})
 });
 
+router.get('/test', (req,res) => {
 
+	Models.openDay();
+
+});
 
 //
 // function readData() {
@@ -61,10 +65,6 @@ router.get('/setting', (req, res) => {
 // 	let data = userList;
 // 	fs.writeFileSync(fd, data);
 // }
- 
-// получение всех юзеров
-// router.get('/list', (req, res) => {
-// 	res.send(userList);
-// });
+
 
 module.exports = router;
