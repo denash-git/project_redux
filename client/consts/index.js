@@ -11,3 +11,9 @@ export const KEYBOARD = {
     KEY_LEFT: "KEY_LEFT",
     KEY_RIGHT: "KEY_RIGHT"
 };
+
+export const UPDATE = {
+    BODY: "BODY",
+    HEAD: "HEAD",
+    SETTING: "SETTING"
+};

@@ -1,4 +1,5 @@
-import {  MOUSE, KEYBOARD } from './../consts/index.js';
+import {  MOUSE, KEYBOARD, UPDATE } from './../consts/index.js';
+import { getTable } from "../requests/index.js"
 
 export const act = {
     click: (e) => ({type: MOUSE.CLICK, e}),
@@ -24,4 +25,19 @@ export const act = {
             }
         }
     }
+};
+
+export const prompt = (name) => {
+
+    //запрос body таблицы по имени
+    getTable(name).then(
+        result => {
+            let body = JSON.parse(result);
+            console.log('body: ',body);
+            return {type: UPDATE.BODY, body}
+        },
+        error => {
+            return {type:UPDATE.BAD, error}
+        }
+    );
 };

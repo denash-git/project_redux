@@ -1,4 +1,4 @@
-import { MOUSE, KEYBOARD } from '../consts/index.js';
+import { MOUSE, KEYBOARD, UPDATE } from '../consts/index.js';
 
 
 const initialState = {
@@ -48,11 +48,12 @@ const initialState = {
         [14, 'Батарейка А7', 38, 5, 190],
         [15, 'Батарейка А7', 38, 5, 190],
         [16, '',null, null, null]
-    ],
-    active: {}
+    ]
+
 };
 
-export const Reducer = (state = initialState, action) => {
+export const reducer1 = (state = initialState, action) => {
+
 
     switch(action.type) {
 
@@ -72,7 +73,7 @@ export const Reducer = (state = initialState, action) => {
             const key = action.value.value; //текущий нажатый символ
             let {active} = state.active; //данные активной ячейки
             let {table_sale} = state;
-            console.log(active);
+            console.log('акт ',active);
             table_sale[active.row][active.cell] = key;
             return Object.assign({}, state, {table_sale});
             //     console.log(key);
@@ -97,9 +98,9 @@ export const Reducer = (state = initialState, action) => {
             const cell = vol.cellIndex; //ячека
             console.log(table)
             //определить настройки ячеек по имени таблицы
-            const find = setting_table.findIndex(setting_table => setting_table.name === table); //нашли позицию
-            const _profil = setting_table[find].profil;
-            const type = setting_table[find].type[cell];
+            const find = setting_table.findIndex(setting_table => setting_table.name === table); //нашли позицию в массиве
+            const _profil = setting_table[find].profil; //из массива берем объект, у объекта профиль
+            const type = setting_table[find].type[cell];    //так же тип данных в ячейках
 
             //если ячейку можно редактировать =>сделать активной
             if (_profil[cell] === 1) {
@@ -116,6 +117,24 @@ export const Reducer = (state = initialState, action) => {
             } else {
                 return state
             }
+
+
+        default: return state;
+    }
+};
+
+let initialState3 = {
+    active: {id: ""},
+    table_body: [],
+    table_head: [],
+    setting: []
+};
+export const reducer3 = (state = initialState3, action) => {
+
+    switch(action.type) {
+
+        case UPDATE.BODY:
+            return Object.assign({}, state, {table_body: action.body});
 
 
         default: return state;
