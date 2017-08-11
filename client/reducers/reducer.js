@@ -2,6 +2,7 @@ import { MOUSE, KEYBOARD, UPDATE } from '../consts/index.js';
 
 
 const initialState = {
+    active: {},
     setting_table: [
         {
             name: "rem",
@@ -124,7 +125,7 @@ export const reducer1 = (state = initialState, action) => {
 };
 
 let initialState3 = {
-    active: {id: ""},
+    active: {},
     table_body: [],
     table_head: [],
     setting: []
@@ -137,6 +138,6 @@ export const reducer3 = (state = initialState3, action) => {
             return Object.assign({}, state, {table_body: action.body});
 
 
-        default: return state;
+        default: return state
     }
 };

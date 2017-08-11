@@ -7,9 +7,9 @@ import { act, prompt } from './../actions/index.js';
 
 const mapStateToProps = (state, params) => ({
     name: params.match.params.name,
-    head: state.table_head,
-    body: state.table_body,
-	active: state.active
+    head: state.reducer3.table_head,
+    body: state.reducer3.table_body,
+	active: state.reducer3.active
 });
 
 const mapDispatchToProps = dispatch => ({

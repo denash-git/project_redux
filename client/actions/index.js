@@ -30,7 +30,7 @@ export const act = {
 export const prompt = (name) => {
 
     //запрос body таблицы по имени
-    getTable(name).then(
+ getTable(name).then(
         result => {
             let body = JSON.parse(result);
             console.log('body: ',body);
