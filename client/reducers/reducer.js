@@ -1,60 +1,12 @@
-import { MOUSE, KEYBOARD, UPDATE } from '../consts/index.js';
+import { MOUSE, KEYBOARD, REQ } from '../consts/index.js';
 
 
-const initialState = {
+const initialState1 = {
     active: {},
-    setting_table: [
-        {
-            name: "rem",
-            profil: [ 1, 1, 1, 0]
-        },
-        {
-            name: "begin",
-            profil: [0, 1, 1],
-            type: ["number", "number", "number"]
-        },
-        {
-            name: "sale",
-            profil: [ 0, 1, 1, 1, 0],
-            type: ["number", "string", "number", "number", "number"]
-        }
-
-    ],
-
-    table_begin: [
-        ['Номинал', 'Количество', 'Сумма'],
-        [5000, 2, 0],
-        [1000, null, 0],
-        [500, null, 0],
-        [100, null, 0],
-        [50, 3, 0],
-        ['мелочь', null, 0]
-    ],
-
-    table_sale: [
-        ['№', 'Наименование', 'Цена', 'Кол-во', 'Сумма'],
-        [1, 'Батарейка АА', 35, 2, 70],
-        [2, 'Батарейка А2', 31, 7, 217],
-        [3, 'Батарейка А3', 30, 3, 90],
-        [4, 'Батарейка А5', 36, 1, 36],
-        [5, 'Батарейка А7', 38, 5, 190],
-        [6, 'Батарейка А7', 38, 5, 190],
-        [7, 'Батарейка А7', 38, 5, 190],
-        [8, 'Батарейка А7', 38, 5, 190],
-        [9, 'Батарейка А7', 38, 5, 190],
-        [10, 'Батарейка А7', 38, 5, 190],
-        [11, 'Батарейка А7', 38, 5, 190],
-        [12, 'Батарейка А7', 38, 5, 190],
-        [13, 'Батарейка А7', 38, 5, 190],
-        [14, 'Батарейка А7', 38, 5, 190],
-        [15, 'Батарейка А7', 38, 5, 190],
-        [16, '',null, null, null]
-    ]
 
 };
 
-export const reducer1 = (state = initialState, action) => {
-
+export const reducer1 = (state = initialState1, action) => {
 
     switch(action.type) {
 
@@ -124,19 +76,24 @@ export const reducer1 = (state = initialState, action) => {
     }
 };
 
-let initialState3 = {
+//редюсер обработки сетевых обновлений
+const initialState3 = {
     active: {},
-    table_body: [],
-    table_head: [],
-    setting: []
+    body: [],
+    setting: {}
 };
 export const reducer3 = (state = initialState3, action) => {
 
     switch(action.type) {
 
-        case UPDATE.BODY:
-            return Object.assign({}, state, {table_body: action.body});
+        case REQ.BODY:
+            return Object.assign({}, state, {body: action.body});
 
+        case REQ.SETTING:
+            return Object.assign({}, state, {setting: action.setting});
+
+        case REQ.ERROR:
+            return Object.assign({}, state);
 
         default: return state
     }

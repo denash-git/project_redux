@@ -12,8 +12,8 @@ export const KEYBOARD = {
     KEY_RIGHT: "KEY_RIGHT"
 };
 
-export const UPDATE = {
+export const REQ = {
     BODY: "BODY",
-    HEAD: "HEAD",
+    ERROR: "ERROR",
     SETTING: "SETTING"
 };

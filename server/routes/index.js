@@ -3,8 +3,6 @@ const express = require('express'),
 	fs = require('fs'),
 	router = express.Router(),
     Models = require('./models.js');
-//fd = path.join(__dirname, '../mybasedata/db_file.js');
-//let userList = readData();
 
 // запрос итого таблицы по name
 router.get('/amount/:name', (req, res) => {
@@ -16,11 +14,11 @@ router.get('/amount/:name', (req, res) => {
     })
 });
 
-//запрос на body таблицы, указанной в name
-router.get('/table/:name', (req, res) => {
+//запрос body таблицы по name
+router.get('/body/:name', (req, res) => {
 
 	let name = req.params.name;
-    Models.getTable(name).then(table => {
+    Models.getBody(name).then(table => {
         //преобразование из массива объектов, в двумерный массив.
     	let body = [],
         	bodyTemp = [],
@@ -34,37 +32,29 @@ router.get('/table/:name', (req, res) => {
 			body.push(bodyTemp);
 		});
 		res.send(body);
-		console.log(body);
     });
 });
 
-//запрос настроек таблиц
-router.get('/setting', (req, res) => {
+//запрос настроек таблиц по name
+router.get('/setting/:name', (req, res) => {
 
-	Models.getSetting().then(setting =>{
+    let name = req.params.name;
+	Models.getSetting(name).then(setting =>{
+
+        setting[0].head = setting[0].head.split(',');
+        setting[0].profil = setting[0].profil.split(',');
+        setting[0].type = setting[0].type.split(',');
+        console.log(setting);
 		res.send(setting);
+
 	})
 });
 
+//временная функ для тестов
 router.get('/test', (req,res) => {
 
 	Models.openDay();
 
 });
-
-//
-// function readData() {
-// 	let file = fs.readFileSync(fd, 'utf8');
-// 	//let data = JSON.parse(file);  пока без джейсона
-// 	let data = file;
-// 	return data;
-// }
-//
-// function writeData(userList) {
-// 	//let data = JSON.stringify(userList); пока без джейсона
-// 	let data = userList;
-// 	fs.writeFileSync(fd, data);
-// }
-
 
 module.exports = router;

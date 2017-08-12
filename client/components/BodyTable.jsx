@@ -1,13 +1,10 @@
 /*
 формирует тело таблицы
-
-body- массив строк тела таблицы
-active - объект с координатами для активации input
+body- массив строк
+id - координаты для активации input
 contentEditable
 */
-
 import React from 'react';
-
 
 export const BodyTable = ({body, id, click, change}) => {
 
@@ -23,7 +20,6 @@ export const BodyTable = ({body, id, click, change}) => {
 
 					{(id === (elem[0]+''+cell)) ?
 						<input className='focus' onKeyDown={change} defaultValue={item} />: item}
-				
 				</td>)}
 				</tr>)}
     	</tbody>
