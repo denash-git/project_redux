@@ -31,6 +31,7 @@ router.get('/body/:name', (req, res) => {
 			}
 			body.push(bodyTemp);
 		});
+        console.log(body)
 		res.send(body);
     });
 });
@@ -44,7 +45,6 @@ router.get('/setting/:name', (req, res) => {
         setting[0].head = setting[0].head.split(',');
         setting[0].profil = setting[0].profil.split(',');
         setting[0].type = setting[0].type.split(',');
-        console.log(setting);
 		res.send(setting);
 
 	})

@@ -1,26 +1,33 @@
-const db = require('../mybasedata/index.js');
+const db = require('../mydatabase/index.js');
 
 //запрос таблицы по name
 exports.getBody = (name) => {
     return new Promise((resolve, reject) => {
+
         switch (name) {
 
             case 'sale':
-                db.get().query('SELECT enum, name, price, vol, price*vol AS summa FROM sale WHERE 1',
+            case 'outtrans':
+            case 'intrans':
+                db.get().query('SELECT enum, name, price, vol, price*vol AS summa FROM ?? WHERE 1', name,
                     (err, answer) => {
                         if(err) reject(err);
+                        console.log(err, answer);
                         resolve(answer);
                 });
                 break;
             case 'begin':
-                db.get().query('SELECT nominal, vol, vol*ru AS result FROM begin WHERE 1',
+            case 'end':
+                db.get().query('SELECT nominal, vol, vol*ru AS result FROM ?? WHERE 1', name,
                     (err, answer) => {
                         if(err) reject(err);
                         resolve(answer);
                 });
                 break;
-        }
 
+            default:
+                reject('CASE:ERROR: Не найдена таблица')
+        }
     })
 };
 
@@ -41,20 +48,26 @@ exports.getSetting = (name) => {
 exports.getAmount = (name) => {
     return new Promise((resolve, reject) => {
         switch (name) {
-            case 'sale': //подсчет для таблицы sale
-                db.get().query('SELECT SUM(price*vol) AS amount FROM sale WHERE 1',
+            case 'sale': //подсчет для таблиц
+            case 'outtrans':
+            case 'intrans':
+                db.get().query('SELECT SUM(price*vol) AS amount FROM ?? WHERE 1', name,
                     (err, answer) => {
                         if (err) reject(err);
                         resolve(answer);
                 });
                 break;
-            case 'begin': //подсчет для таблицы begin
-                db.get().query('SELECT SUM(vol*ru) AS amount FROM begin WHERE 1',
+            case 'begin': //подсчет для таблиц
+            case 'end':
+                db.get().query('SELECT SUM(vol*ru) AS amount FROM ?? WHERE 1', name,
                     (err, answer) => {
                         if(err) reject(err);
                         resolve(answer);
                     });
                 break;
+
+            default:
+                reject('CASE:ERROR: Не найдена таблица')
         }
     })
 };
@@ -80,7 +93,7 @@ exports.openDay = () => {
                 console.log(answer);
             })
     });
-}
+};
 
 //ф собирает текущую дату для запросов к SQL
 // function todayData() {

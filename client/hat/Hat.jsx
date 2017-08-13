@@ -24,12 +24,11 @@ class Hat extends React.Component {
                 <ul>
                     <li><a href="/list/begin">Начало дня</a></li>
                     <li><a href="/list/sale">Продажи</a></li>
-                    <li><a href="#">Расход</a></li>
-                    <li><a href="#">Приход</a></li>
-                    <li><a href="#">Конец дня</a></li>
+                    <li><a href="/list/outtrans">Расход</a></li>
+                    <li><a href="/list/intrans">Приход</a></li>
+                    <li><a href="/list/end">Конец дня</a></li>
                     <li><a href="#">Отчет</a></li>
                 </ul>
-
             </div>
         );
     }

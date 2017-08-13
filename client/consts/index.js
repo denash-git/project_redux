@@ -1,5 +1,6 @@
 export const MOUSE = {
-    CLICK: "CLICK"
+    CLICK: "CLICK",
+    SETSETTING: "SETSETTING"
 };
 
 export const KEYBOARD = {
@@ -13,6 +14,7 @@ export const KEYBOARD = {
 };
 
 export const REQ = {
+    AMOUNT: "AMOUNT",
     BODY: "BODY",
     ERROR: "ERROR",
     SETTING: "SETTING"

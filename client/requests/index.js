@@ -14,16 +14,14 @@ export const getSetting = (dispatch, name) => {
 };
 
 //запрос итого таблицы по name
-export const getAmount = (name) => {
+export const getAmount = (dispatch, name) => {
 
-    return new Promise((resolve, reject) => {
         request
             .get(`/amount/${name}`)
             . end((err,res) => {
-                if(err) reject(err);
-                resolve(res.text)
+                if(err) dispatch(actionReq.error(err));
+                dispatch(actionReq.AmountOK(res.body.amount));
             })
-    })
 };
 
 //запрос body таблицы по name

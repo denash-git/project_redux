@@ -1,4 +1,4 @@
-import { getBody, getSetting } from "./index.js";
+import { getBody, getSetting, getAmount } from "./index.js";
 
 export const thunkGetBody = (name) => {
     return (
@@ -12,6 +12,14 @@ export const thunkGetSetting = (name) => {
     return (
         (dispatch) => {
             getSetting(dispatch, name);
+        }
+    )
+};
+
+export const thunkGetAmount = (name) => {
+    return (
+        (dispatch) => {
+            getAmount(dispatch, name);
         }
     )
 };

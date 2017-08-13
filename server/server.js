@@ -2,7 +2,7 @@ var express = require('express'),
 	path = require('path'),
 	app = express(),
 	bodyParser = require('body-parser'),
-	db = require('./mybasedata/index.js');
+	db = require('./mydatabase/index.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
