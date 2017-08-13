@@ -1,0 +1,13 @@
+let body = [
+    [1,1,'hhggh',25,2,50],
+    [2,2,'hghggg',47,5,235]
+];
+body.map((elem, row) => {
+    console.log('elem ', elem, ' row ', row);
+
+    elem.map((item, cell) => {
+        console.log('item ', item, ' cell ', cell)
+
+
+    })
+});

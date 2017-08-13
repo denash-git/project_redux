@@ -13,7 +13,8 @@ module.exports = {
             host: 'localhost',
             user: 'root',
             password: 'admin',
-            database: 'database'
+            database: 'database',
+            multipleStatements :  true
         });
 
         state.database = connection;

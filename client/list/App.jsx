@@ -35,7 +35,7 @@ class App extends React.Component {
 	 }
 
 	render() {
-
+		console.log('app ', this.props.body);
         return (
 			<div className="container col-7 row">
 

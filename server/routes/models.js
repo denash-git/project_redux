@@ -7,18 +7,23 @@ exports.getBody = (name) => {
         switch (name) {
 
             case 'sale':
-            case 'outtrans':
+            case 'outtrans': //все 3 таблицы используют один код:
             case 'intrans':
-                db.get().query('SELECT enum, name, price, vol, price*vol AS summa FROM ?? WHERE 1', name,
+                // поля |id(AutoInc) |num(порядковый номер, генерируется) |name |price |vol |сумма(вычисляемое)
+                db.get().query('set @row = 0;' +
+                    'SELECT id, (@row := @row + 1) AS num, name, price, vol, price*vol AS summa FROM ?? WHERE 1',
+                    name,
                     (err, answer) => {
                         if(err) reject(err);
-                        console.log(err, answer);
-                        resolve(answer);
+                        resolve(answer[1]); //из-за 2 операторов к sql, нужный ответ в массиве[1]
                 });
                 break;
+
             case 'begin':
             case 'end':
-                db.get().query('SELECT nominal, vol, vol*ru AS result FROM ?? WHERE 1', name,
+                // поля= id(AutoInc) |nominal |ru-только для расчетов |vol |сумма(вычисляемое)
+                db.get().query('SELECT id, nominal, vol, vol*ru AS result FROM ?? WHERE 1',
+                    name,
                     (err, answer) => {
                         if(err) reject(err);
                         resolve(answer);
