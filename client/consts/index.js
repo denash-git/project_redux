@@ -1,6 +1,6 @@
 export const MOUSE = {
     CLICK: "CLICK",
-    SETSETTING: "SETSETTING"
+    NO: "NO",
 };
 
 export const KEYBOARD = {

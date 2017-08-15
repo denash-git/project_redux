@@ -7,7 +7,7 @@ contentEditable
 import React from 'react';
 
 export const BodyTable = ({body, id, click, change}) => {
-	console.log('jsx ', body);
+
 	return (
       	<tbody>
 			{body.map((elem, row) =>
@@ -18,12 +18,13 @@ export const BodyTable = ({body, id, click, change}) => {
 
 				<td key={cell}
 					id={row+''+cell}
-					onClick={click} >
+					onClick={click}>
 
 					{(id === (row+''+cell)) ?
 						<input
 							   className='focus'
 							   onKeyDown={change}
+
 							   defaultValue={item}
 						/>: item
 					}

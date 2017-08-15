@@ -18,7 +18,7 @@ export const getAmount = (dispatch, name) => {
 
         request
             .get(`/amount/${name}`)
-            . end((err,res) => {
+            .end((err,res) => {
                 if(err) dispatch(actionReq.error(err));
                 dispatch(actionReq.AmountOK(res.body.amount));
             })
@@ -28,8 +28,20 @@ export const getAmount = (dispatch, name) => {
 export const getBody = (dispatch, name) => {
         request
             .get(`/body/${name}`)
-            . end((err,res) => {
+            .end((err,res) => {
                 if (err) dispatch(actionReq.error(err));
                 dispatch(actionReq.BodyOK(res.body))
             })
+};
+
+//отправка данных на сервер
+export const sendData = (dispatch, data) => {
+    request
+        .post('/data')
+        .send(data)
+        .end((err, res) => {
+            if (err) dispatch(actionReq.error(err));
+
+            dispatch(actionReq.SendOK(res.body))
+        })
 };

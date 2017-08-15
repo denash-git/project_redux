@@ -7,9 +7,9 @@ const express = require('express'),
 // запрос итого таблицы по name
 router.get('/amount/:name', (req, res) => {
 
-	let name = req.params.name;
+	const name = req.params.name;
     Models.getAmount(name).then(answer =>{
-    	let amount = answer[0];
+    	const amount = answer[0];
         res.send(amount);
     })
 });
@@ -17,7 +17,7 @@ router.get('/amount/:name', (req, res) => {
 //запрос body таблицы по name
 router.get('/body/:name', (req, res) => {
 
-	let name = req.params.name;
+	const name = req.params.name;
     Models.getBody(name).then(table => {
         //преобразование из массива объектов, в двумерный массив.
     	let body = [],
@@ -39,15 +39,28 @@ router.get('/body/:name', (req, res) => {
 //запрос настроек таблиц по name
 router.get('/setting/:name', (req, res) => {
 
-    let name = req.params.name;
+    const name = req.params.name;
 	Models.getSetting(name).then(setting =>{
-
+		//конвертирование ключей в массивы
         setting[0].head = setting[0].head.split(',');
         setting[0].profil = setting[0].profil.split(',');
         setting[0].type = setting[0].type.split(',');
 		res.send(setting);
-
 	})
+});
+
+//внесение изменений в таблицу
+router.post('/data', (req, res) => {
+
+    const data = req.body;
+    const name = data[0];
+    const row = data[2]; //[0]- позиция строки на клиенте [1] сама строка;
+
+
+    Models.sendData(name, row).then(newRow => {
+
+        console.log(newRow)
+    });
 });
 
 //временная функ для тестов

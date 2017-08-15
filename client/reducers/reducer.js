@@ -1,21 +1,27 @@
 import { MOUSE, KEYBOARD, REQ } from '../consts/index.js';
-
+import { thunkSendData} from "../requests/thunk.js";
 
 let initialState = {
     active: {},
     body: [],
     setting: {},
-    amount: null
+    amount: 0
 };
 export const reducer = (state = initialState, action) => {
-
-
+    let  {active} = state;
+    const {row} = state.active;
+    const {body} = state;
     // обработка клавиатуры =========================================
     switch (action.type) {
 
         case KEYBOARD.ENTER:
-            console.log("enter");
-            return state;
+
+            active.id = '';
+            //row- позиция строки, ...строка из таблицы
+            let data = [active.table, row, body[row]]; //подготовили данные
+            console.log("enter", data);
+            let a = (data) => dispatch(thunkSendData(data)); //инициировали отправку в базу
+            return Object.assign({}, state, {active});
 
         case KEYBOARD.TAB:
             console.log("TAB");
@@ -30,8 +36,8 @@ export const reducer = (state = initialState, action) => {
             const keyType = action.keyType; //нажатый тип символа
 
             const {type} = state.setting; //тип данных в ячейках
-            const {row, cell} = state.active; //активные координаты таблицы
-            const {body} = state; //тело таблицы
+            const {cell} = state.active; //активные координаты таблицы
+             //тело таблицы
             console.log(key, keyType, type, row, cell)
             //если тип символов для ячейки разрешен => внести изменение
             if (keyType === type[cell]) body[row][cell] = key;
@@ -42,12 +48,16 @@ export const reducer = (state = initialState, action) => {
 
 //  обработка Мышки ====================================================
         case MOUSE.CLICK:
-            const active = action.active;
-            console.log('active ',active)
+            active = action.active;
+            console.log('active ',active);
             const {profil} = state.setting;
             //если ячейку нельзя редактировать => деактивировать id
             if (profil[active.cell] === '0') active.id = '';
             return Object.assign({}, state, {active});
+
+        case MOUSE.NO:
+            console.log('state ', state.active)
+            return Object.assign({}, state);
 
 // обработка сетевых обновлений ==========================================
         case REQ.BODY:

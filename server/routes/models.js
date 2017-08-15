@@ -77,6 +77,42 @@ exports.getAmount = (name) => {
     })
 };
 
+//внесение изменений
+exports.senData = (name, data) => {
+  return new Promise((resolve, reject) => {
+
+      switch (name) {
+
+          case 'sale':
+          case 'outtrans':
+          case 'intrans':
+              //подготовка данных для sql
+              //порядок [имя табл, name, price, vol, id
+              const field = [name, data[2], data[3], data[4], data[0]];
+              db.get().query('UPDATE ? SET name=?, price=?, vol=? WHERE id=?',
+                  field,
+                  (err, answer) => {
+                      if (err) reject(err);
+                      resolve(answer);
+                  });
+              break;
+
+          case 'begin': //подсчет для таблиц
+          case 'end':
+              db.get().query('SELECT SUM(vol*ru) AS amount FROM ?? WHERE 1', name,
+                  (err, answer) => {
+                      if(err) reject(err);
+                      resolve(answer);
+                  });
+              break;
+
+          default:
+              reject('CASE:ERROR: Не найдена таблица')
+      }
+  })
+
+};
+
 //прикрутить к авторизации! при первом логировании продавца в текущий день (открытие смены)
 //создать набор необходимых "нулевых" данных в нужных таблицах
 exports.openDay = () => {

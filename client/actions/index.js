@@ -11,20 +11,22 @@ export const handleClick = (e) => {
     const active = {
         id: id,
         row: row - 1,
-        cell: cell,
+        cell: cell + 1,
         table: table
     };
-    if (typeof row !=='undefined') return {type: MOUSE.CLICK, active};
+    console.log(active);
+    if (id !== '') return {type: MOUSE.CLICK, active};
+    else  return {type: MOUSE.NO}
 };
 
 // экшен KEYBOARD ==============================================================
 export const handleChange = (e) => {
     const key = e.keyCode;
     const value = e.target.value;
-    console.log(e);
 
     switch (+key) {
         case 13:
+
             return {type: KEYBOARD.ENTER};
 
         case 9:

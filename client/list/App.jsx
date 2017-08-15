@@ -19,12 +19,14 @@ const mapDispatchToProps = dispatch => ({
     handleChange: (e) => dispatch(handleChange(e)),
 	thunkGetBody: (name) => dispatch(thunkGetBody(name)),
 	thunkGetSetting: (name) => dispatch(thunkGetSetting(name)),
-	thunkGetAmount: (name) => dispatch(thunkGetAmount(name))
+	thunkGetAmount: (name) => dispatch(thunkGetAmount(name)),
+
 });
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+
 	}
 
 	componentDidMount() {
@@ -34,8 +36,10 @@ class App extends React.Component {
 		this.props.thunkGetAmount(name);
 	 }
 
+
+
 	render() {
-		console.log('app ', this.props.body);
+
         return (
 			<div className="container col-7 row">
 
