@@ -6,7 +6,7 @@ contentEditable
 */
 import React from 'react';
 
-export const BodyTable = ({body, id, click, change}) => {
+export const BodyTable = ({body, id, click, change,type, blur}) => {
 
 	return (
       	<tbody>
@@ -22,10 +22,12 @@ export const BodyTable = ({body, id, click, change}) => {
 
 					{(id === (row+''+cell)) ?
 						<input
-							   className='focus'
-							   onKeyDown={change}
-
-							   defaultValue={item}
+							type={type}
+							onKeyUp={change}
+							onBlur={blur}
+							min="1"
+							defaultValue={item}
+							autoFocus
 						/>: item
 					}
 				</td>)}

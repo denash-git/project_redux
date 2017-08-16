@@ -51,7 +51,7 @@ router.get('/setting/:name', (req, res) => {
 
 //внесение изменений в таблицу
 router.post('/data', (req, res) => {
-
+    console.log('сервер')
     const data = req.body;
     const name = data[0];
     const row = data[2]; //[0]- позиция строки на клиенте [1] сама строка;
@@ -64,9 +64,10 @@ router.post('/data', (req, res) => {
 });
 
 //временная функ для тестов
-router.get('/test', (req,res) => {
+router.get('/formend', (req,res) => {
 
-	Models.openDay();
+	console.log(req.query, req.query.modul, req.query.incass)
+	//Models.openDay();
 
 });
 

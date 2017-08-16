@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 
 import { HeadTable } from '../components/HeadTable.jsx';
 import { BodyTable } from '../components/BodyTable.jsx';
+import { FormEnd } from "../components/FormEnd.jsx";
 import { handleClick, handleChange } from '../actions/index.js';
-import { thunkGetBody, thunkGetSetting, thunkGetAmount } from '../requests/thunk.js'
+import { thunkGetBody, thunkGetSetting, thunkGetAmount, thunkSendData } from '../requests/thunk.js'
 
 const mapStateToProps = (state, params) => ({
     name: params.match.params.name,
@@ -20,6 +21,7 @@ const mapDispatchToProps = dispatch => ({
 	thunkGetBody: (name) => dispatch(thunkGetBody(name)),
 	thunkGetSetting: (name) => dispatch(thunkGetSetting(name)),
 	thunkGetAmount: (name) => dispatch(thunkGetAmount(name)),
+	handleBlur: (e, {active}) => dispatch(thunkSendData(e, active))
 
 });
 
@@ -36,9 +38,10 @@ class App extends React.Component {
 		this.props.thunkGetAmount(name);
 	 }
 
-
-
 	render() {
+
+		let Form = '';
+        if (this.props.name === 'end') {Form=<FormEnd />}
 
         return (
 			<div className="container col-7 row">
@@ -55,10 +58,13 @@ class App extends React.Component {
 					<BodyTable
 						body={this.props.body}
 						id={this.props.active.id}
+						type={this.props.active.type}
 						click={this.props.handleClick}
 						change={this.props.handleChange}
+						blur={this.props.handleBlur}
 					/>
 				</table>
+				{Form}
 			</div>
 		);
 	}

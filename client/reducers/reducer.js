@@ -7,6 +7,7 @@ let initialState = {
     setting: {},
     amount: 0
 };
+
 export const reducer = (state = initialState, action) => {
     let  {active} = state;
     const {row} = state.active;
@@ -18,9 +19,9 @@ export const reducer = (state = initialState, action) => {
 
             active.id = '';
             //row- позиция строки, ...строка из таблицы
-            let data = [active.table, row, body[row]]; //подготовили данные
-            console.log("enter", data);
-            let a = (data) => dispatch(thunkSendData(data)); //инициировали отправку в базу
+            // let data = [active.table, row, body[row]]; //подготовили данные
+            // console.log("enter", data);
+            // thunkSendData(data); //инициировали отправку в базу
             return Object.assign({}, state, {active});
 
         case KEYBOARD.TAB:
@@ -28,20 +29,15 @@ export const reducer = (state = initialState, action) => {
             return state;
 
         case KEYBOARD.KEY_UP:
+
             console.log("UP");
-            return state;
+            return Object.assign({}, state, {active});
 
         case KEYBOARD.VALUE:
             const key = action.value; //текущий нажатый символ
-            const keyType = action.keyType; //нажатый тип символа
-
-            const {type} = state.setting; //тип данных в ячейках
             const {cell} = state.active; //активные координаты таблицы
-             //тело таблицы
-            console.log(key, keyType, type, row, cell)
-            //если тип символов для ячейки разрешен => внести изменение
-            if (keyType === type[cell]) body[row][cell] = key;
-
+            //тело таблицы получили в шапке
+            body[row][cell] = key; // внесли нажатый символ в ячекйку
             return Object.assign({}, state, {body});
 
         // !!внимание: добавить, если заполнится последняя строка, добавить следующую
@@ -49,14 +45,15 @@ export const reducer = (state = initialState, action) => {
 //  обработка Мышки ====================================================
         case MOUSE.CLICK:
             active = action.active;
-            console.log('active ',active);
             const {profil} = state.setting;
+            const {type} = state.setting;
+            //определяем тип у активной ячейки для ввода(text/number)
+            active.type = type[active.cell];
             //если ячейку нельзя редактировать => деактивировать id
             if (profil[active.cell] === '0') active.id = '';
             return Object.assign({}, state, {active});
 
         case MOUSE.NO:
-            console.log('state ', state.active)
             return Object.assign({}, state);
 
 // обработка сетевых обновлений ==========================================

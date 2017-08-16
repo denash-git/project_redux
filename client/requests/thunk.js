@@ -1,5 +1,6 @@
 import { getBody, getSetting, getAmount, sendData } from "./index.js";
 
+//запрос тела таблицы
 export const thunkGetBody = (name) => {
     return (
         (dispatch) => {
@@ -8,6 +9,7 @@ export const thunkGetBody = (name) => {
     )
 };
 
+//запрос настроек таблицы
 export const thunkGetSetting = (name) => {
     return (
         (dispatch) => {
@@ -16,6 +18,7 @@ export const thunkGetSetting = (name) => {
     )
 };
 
+//запрос суммы ИТОГО таблицы
 export const thunkGetAmount = (name) => {
     return (
         (dispatch) => {
@@ -25,7 +28,8 @@ export const thunkGetAmount = (name) => {
 };
 
 //отправка запроса на изменение
-export const thunkSendData = (data) => {
+export const thunkSendData = (e, active) => {
+    console.log('thunk', e.target.value, active.cell)
     return (
         (dispatch) => {
             sendData(dispatch, data);

@@ -8,13 +8,14 @@ export const handleClick = (e) => {
     const table = vol.parentNode.parentNode.parentNode.id;  //имя таблицы
     const row = vol.parentNode.rowIndex; //строка
     const cell = vol.cellIndex; //ячека
-    const active = {
+    const active = { //формируется объект с инфо о нажатой ячейки
         id: id,
         row: row - 1,
         cell: cell + 1,
-        table: table
+        table: table,
+        type: ''
     };
-    console.log(active);
+    //если нажата повторно, то не вносить изменнения
     if (id !== '') return {type: MOUSE.CLICK, active};
     else  return {type: MOUSE.NO}
 };
@@ -23,13 +24,13 @@ export const handleClick = (e) => {
 export const handleChange = (e) => {
     const key = e.keyCode;
     const value = e.target.value;
-
     switch (+key) {
         case 13:
 
             return {type: KEYBOARD.ENTER};
 
         case 9:
+            e.preventDefault();
             return {type: KEYBOARD.TAB};
 
         case 38:
@@ -37,14 +38,14 @@ export const handleChange = (e) => {
 
         default: return {
             type: KEYBOARD.VALUE,
-            value: value,
-            keyType: ((key > 47 && key < 58) || (key > 95 && key < 106)) ? "number" : "string"
+            value: value
         }
     }
 };
 
 // экшен REGUEST ===========================================================
 export const actionReq =  {
+        SendOK: (data) => ({type: REQ.SEND, data}),
         SettingOK: (setting) => ({type: REQ.SETTING, setting}),
         BodyOK: (body) => ({type: REQ.BODY, body}),
         AmountOK: (amount) => ({type: REQ.AMOUNT, amount}),

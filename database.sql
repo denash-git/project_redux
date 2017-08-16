@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Авг 15 2017 г., 03:46
+-- Время создания: Авг 16 2017 г., 14:23
 -- Версия сервера: 10.2.7-MariaDB
 -- Версия PHP: 7.1.8
 
@@ -46,6 +46,32 @@ INSERT INTO `begin` (`id`, `nominal`, `ru`, `vol`, `data`) VALUES
 (3, '500 р.', 500, 1, '2017-08-06'),
 (4, '100 р.', 100, 0, '2017-08-06'),
 (5, '50 р.', 50, 0, '2017-08-06'),
+(6, 'мелочь', 1, 0, '2017-08-06');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `end`
+--
+
+CREATE TABLE `end` (
+  `id` int(11) NOT NULL,
+  `nominal` varchar(8) NOT NULL,
+  `ru` smallint(6) NOT NULL,
+  `vol` tinyint(4) NOT NULL,
+  `data` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `end`
+--
+
+INSERT INTO `end` (`id`, `nominal`, `ru`, `vol`, `data`) VALUES
+(1, '5000 р.', 5000, 0, '2017-08-06'),
+(2, '1000 р.', 1000, 0, '2017-08-06'),
+(3, '500 р.', 500, 0, '2017-08-06'),
+(4, '100 р.', 100, 0, '2017-08-06'),
+(5, '50 р.', 50, 1, '2017-08-06'),
 (6, 'мелочь', 1, 0, '2017-08-06');
 
 -- --------------------------------------------------------
@@ -135,10 +161,11 @@ CREATE TABLE `setting` (
 --
 
 INSERT INTO `setting` (`id`, `name`, `profil`, `type`, `head`, `caption`) VALUES
-(1, 'sale', '0,0,1,1,1,0', 'id,number,string,number,number,number', '№,Наименование,Цена,Кол-во,Сумма', 'Продажи'),
+(1, 'sale', '0,0,1,1,1,0', 'id,number,text,number,number,number', '№,Наименование,Цена,Кол-во,Сумма', 'Продажи'),
 (2, 'begin', '0,0,1,0', 'id,number,number,number', 'Номинал,Количество,Сумма', 'Начало дня'),
-(3, 'outtrans', '0,0,1,1,1,0', 'id,number,string,number,number,number', '№,Расходная операция,Цена,Кол-во,Сумма', 'Расход (возврат) ден.средств'),
-(4, 'intrans', '0,0,1,1,1,0', 'id,number,string,number,number,number', '№,Доходная операция,Цена,Кол-во,Сумма', 'Доход (приход), не связанные с розницей');
+(3, 'outtrans', '0,0,1,1,1,0', 'id,number,text,number,number,number', '№,Расходная операция,Цена,Кол-во,Сумма', 'Расход (возврат) ден.средств'),
+(4, 'intrans', '0,0,1,1,1,0', 'id,number,text,number,number,number', '№,Доходная операция,Цена,Кол-во,Сумма', 'Доход (приход), не связанные с розницей'),
+(5, 'end', '0,0,1,0', 'id,number,number,number', 'Номинал,Количество,Сумма', 'Конец дня');
 
 --
 -- Индексы сохранённых таблиц
@@ -148,6 +175,12 @@ INSERT INTO `setting` (`id`, `name`, `profil`, `type`, `head`, `caption`) VALUES
 -- Индексы таблицы `begin`
 --
 ALTER TABLE `begin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `end`
+--
+ALTER TABLE `end`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -185,6 +218,11 @@ ALTER TABLE `setting`
 ALTER TABLE `begin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
+-- AUTO_INCREMENT для таблицы `end`
+--
+ALTER TABLE `end`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT для таблицы `intrans`
 --
 ALTER TABLE `intrans`
@@ -203,7 +241,7 @@ ALTER TABLE `sale`
 -- AUTO_INCREMENT для таблицы `setting`
 --
 ALTER TABLE `setting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

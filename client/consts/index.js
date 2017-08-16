@@ -17,5 +17,6 @@ export const REQ = {
     AMOUNT: "AMOUNT",
     BODY: "BODY",
     ERROR: "ERROR",
-    SETTING: "SETTING"
+    SETTING: "SETTING",
+    SEND: "SEND"
 };

@@ -36,12 +36,13 @@ export const getBody = (dispatch, name) => {
 
 //отправка данных на сервер
 export const sendData = (dispatch, data) => {
+    console.log('request')
     request
         .post('/data')
         .send(data)
         .end((err, res) => {
             if (err) dispatch(actionReq.error(err));
-
+            console.log('request otvet')
             dispatch(actionReq.SendOK(res.body))
         })
 };
