@@ -45,10 +45,11 @@ export const handleChange = (e) => {
 
 // экшен REGUEST ===========================================================
 export const actionReq =  {
-        SendOK: (data) => ({type: REQ.SEND, data}),
+        ReportOK: (report) => ({type: REQ.REPORT, report}),
+        NewStr: () => ({type: REQ.NEW}),
+        SendOK: (obj) => ({type: REQ.SEND, obj}),
         SettingOK: (setting) => ({type: REQ.SETTING, setting}),
         BodyOK: (body) => ({type: REQ.BODY, body}),
         AmountOK: (amount) => ({type: REQ.AMOUNT, amount}),
-        error: () => ({type: REG.BAD})
-
+        error: (err) => ({type: REG.BAD, err})
 };

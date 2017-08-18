@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Match, Route} from 'react-router-dom';
 import thunk from 'redux-thunk';
 
-import App from './list/App.jsx';
+import App from './components/App.jsx';
 import Hat from './components/Hat.jsx';
 import Report from './components/Report.jsx';
 import * as reducers from './reducers/reducer.js';

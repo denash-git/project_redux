@@ -1,7 +1,8 @@
 const db = require('../mydatabase/index.js');
 
-//запрос таблицы по name
-exports.getBody = (name) => {
+//запрос body таблицы по name
+//crit - объект с доп условиями
+exports.getBody = (name, crit = 1) => {
     return new Promise((resolve, reject) => {
 
         switch (name) {
@@ -11,8 +12,8 @@ exports.getBody = (name) => {
             case 'intrans':
                 // поля |id(AutoInc) |num(порядковый номер, генерируется) |name |price |vol |сумма(вычисляемое)
                 db.get().query('set @row = 0;' +
-                    'SELECT id, (@row := @row + 1) AS num, name, price, vol, price*vol AS summa FROM ?? WHERE 1',
-                    name,
+                    'SELECT id, (@row := @row + 1) AS num, name, price, vol, price*vol AS sum FROM ?? WHERE ?',
+                    [name, crit],
                     (err, answer) => {
                         if(err) reject(err);
                         resolve(answer[1]); //из-за 2 операторов к sql, нужный ответ в массиве[1]
@@ -22,8 +23,8 @@ exports.getBody = (name) => {
             case 'begin':
             case 'end':
                 // поля= id(AutoInc) |nominal |ru-только для расчетов |vol |сумма(вычисляемое)
-                db.get().query('SELECT id, nominal, vol, vol*ru AS result FROM ?? WHERE 1',
-                    name,
+                db.get().query('SELECT id, nominal, vol, vol*price AS sum FROM ?? WHERE ?',
+                    [name, crit],
                     (err, answer) => {
                         if(err) reject(err);
                         resolve(answer);
@@ -52,89 +53,89 @@ exports.getSetting = (name) => {
 //запрос итого таблицы по name
 exports.getAmount = (name) => {
     return new Promise((resolve, reject) => {
-        switch (name) {
-            case 'sale': //подсчет для таблиц
-            case 'outtrans':
-            case 'intrans':
-                db.get().query('SELECT SUM(price*vol) AS amount FROM ?? WHERE 1', name,
-                    (err, answer) => {
-                        if (err) reject(err);
-                        resolve(answer);
-                });
-                break;
-            case 'begin': //подсчет для таблиц
-            case 'end':
-                db.get().query('SELECT SUM(vol*ru) AS amount FROM ?? WHERE 1', name,
-                    (err, answer) => {
-                        if(err) reject(err);
-                        resolve(answer);
-                    });
-                break;
 
-            default:
-                reject('CASE:ERROR: Не найдена таблица')
-        }
+        db.get().query('SELECT SUM(price*vol) AS amount FROM ?? WHERE 1', name,
+            (err, answer) => {
+                if (err) reject(err);
+                resolve(answer);
+            });
     })
 };
 
-//внесение изменений
-exports.senData = (name, data) => {
+//внесение изменений в таблицу
+//table имя таблицы | data- объект, ключ это имя поля) | id - уникальное значение
+exports.sendData = (table, data, id) => {
   return new Promise((resolve, reject) => {
 
-      switch (name) {
-
-          case 'sale':
-          case 'outtrans':
-          case 'intrans':
-              //подготовка данных для sql
-              //порядок [имя табл, name, price, vol, id
-              const field = [name, data[2], data[3], data[4], data[0]];
-              db.get().query('UPDATE ? SET name=?, price=?, vol=? WHERE id=?',
-                  field,
-                  (err, answer) => {
-                      if (err) reject(err);
-                      resolve(answer);
-                  });
-              break;
-
-          case 'begin': //подсчет для таблиц
-          case 'end':
-              db.get().query('SELECT SUM(vol*ru) AS amount FROM ?? WHERE 1', name,
-                  (err, answer) => {
-                      if(err) reject(err);
-                      resolve(answer);
-                  });
-              break;
-
-          default:
-              reject('CASE:ERROR: Не найдена таблица')
-      }
+      db.get().query('UPDATE ?? SET ? WHERE id=?;' +
+          'SELECT id, price*vol AS sum FROM ?? ORDER BY id DESC LIMIT 1', [table, data, id, table],
+          (err, answer) => {
+              if (err) reject(err);
+              resolve(answer[1]);
+          });
   })
+};
 
+//внесение полей Инкассация и Модуль
+exports.oper = (data) => {
+    return new Promise((resolve, reject) => {
+
+        db.get().query('UPDATE oper SET ? WHERE date=?', [data, '2017-08-17'],
+            (err, answer) => {
+                if (err) reject(err);
+                resolve(answer);
+            });
+    })
+};
+
+//выборка максимального id в таблице и его суммы
+// exports.maxId = (name) => {
+//     return new Promise((resolve, reject) => {
+//
+//         db.get().query('SELECT id, price*vol AS sum FROM ?? ORDER BY id DESC LIMIT 1', name,
+//             (err, answer) => {
+//                 if (err) reject(err);
+//                 resolve(answer);
+//             });
+//     })
+// };
+
+//добавление пустой строки
+exports.addString = (name) => {
+    return new Promise((resolve, reject) => {
+
+        const value = [null, '2017-08-18', null, null, null];
+        db.get().query('INSERT INTO ?? (id, date, name, price, vol) VALUES (?)',
+            [name, value],
+            (err, answer) => {
+                if (err) reject(err);
+                resolve(answer);
+            });
+    })
 };
 
 //прикрутить к авторизации! при первом логировании продавца в текущий день (открытие смены)
 //создать набор необходимых "нулевых" данных в нужных таблицах
-exports.openDay = () => {
-    let data = new Date(); //текущая дата
-    console.log(data);
-    //создание пустой таблицы begin
-    let value = [
-        {nominal: '5000 р.', ru: 5000, vol: 0, data: data},
-        {nominal: '1000 р.', ru: 1000, vol: 0, data: data},
-        {nominal: '500 р.', ru: 500, vol: 0, data: data},
-        {nominal: '100 р.', ru: 100, vol: 0, data: data},
-        {nominal: '50 р.', ru: 50, vol: 0, data: data},
-        {nominal: 'мелочь', ru: 1, vol: 0, data: data}
-    ];
-    value.map(item => {
-        db.get().query('INSERT INTO begin SET ?', item,
-            (err, answer) => {
-                if (err) console.log(err);
-                console.log(answer);
-            })
-    });
-};
+// exports.openDay = () => {
+//     let data = new Date(); //текущая дата
+//     console.log(data);
+//     //создание пустой таблицы begin
+//     let value = [
+//         {nominal: '5000 р.', ru: 5000, vol: 0, data: data},
+//         {nominal: '1000 р.', ru: 1000, vol: 0, data: data},
+//         {nominal: '500 р.', ru: 500, vol: 0, data: data},
+//         {nominal: '100 р.', ru: 100, vol: 0, data: data},
+//         {nominal: '50 р.', ru: 50, vol: 0, data: data},
+//         {nominal: 'мелочь', ru: 1, vol: 0, data: data}
+//     ];
+//     value.map(item => {
+//         db.get().query('INSERT INTO begin SET ?', item,
+//             (err, answer) => {
+//                 if (err) console.log(err);
+//                 console.log(answer);
+//             })
+//     });
+// };
 
 //ф собирает текущую дату для запросов к SQL
 // function todayData() {

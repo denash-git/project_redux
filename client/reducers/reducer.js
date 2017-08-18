@@ -1,30 +1,27 @@
 import { MOUSE, KEYBOARD, REQ } from '../consts/index.js';
-import { thunkSendData} from "../requests/thunk.js";
 
 let initialState = {
     active: {},
     body: [],
     setting: {},
-    amount: 0
+    amount: 0,
+    report: {}
 };
 
 export const reducer = (state = initialState, action) => {
     let  {active} = state;
-    const {row} = state.active;
-    const {body} = state;
+    let {row} = state.active;
+    let {body} = state;
     // обработка клавиатуры =========================================
     switch (action.type) {
 
         case KEYBOARD.ENTER:
 
-            active.id = '';
-            //row- позиция строки, ...строка из таблицы
-            // let data = [active.table, row, body[row]]; //подготовили данные
-            // console.log("enter", data);
-            // thunkSendData(data); //инициировали отправку в базу
+            //active.id = '';
             return Object.assign({}, state, {active});
 
         case KEYBOARD.TAB:
+
             console.log("TAB");
             return state;
 
@@ -66,7 +63,32 @@ export const reducer = (state = initialState, action) => {
         case REQ.SETTING:
             return Object.assign({}, state, {setting: action.setting});
 
+        case REQ.REPORT:
+            return Object.assign({}, state, {report: action.report});
+
         case REQ.ERROR:
+            console.log(action.err);
+            return Object.assign({}, state);
+
+        case REQ.NEW:
+            location.reload();
+            return state;
+
+        case REQ.SEND:
+            const obj = action.obj; //объект с новой строкой
+            const id = obj.id; // id строки для изменения
+            const sum = obj.sum; //сумма новая
+            let sum_old = 0; //будет старая сумма для расчета коррекции ИТОГО
+            body.map((item) => {
+            //пробег по таблице , ищем id
+                if (item[0] === id) {
+                    //нашли, забрали старую цену, положили новую
+                    sum_old = item[item.length-1];
+                    item[item.length-1] = sum
+                }
+            });
+            let {amount} = state;
+            amount = amount + sum - sum_old; //коррекция ИТОГО
             return Object.assign({}, state);
 
         default:

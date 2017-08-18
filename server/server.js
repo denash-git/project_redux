@@ -10,8 +10,9 @@ app.use('/', express.static(path.join(__dirname, '../public/')));
 app.get('/body/:name', require('./routes/index.js'));
 app.get('/setting/:name', require('./routes/index.js'));
 app.get('/amount/:name', require('./routes/index.js'));
+app.get('/report', require('./routes/index.js'));
 app.post('/data', require('./routes/index.js'));
-app.get('/formend', require('./routes/index.js'));
+app.get('/oper', require('./routes/index.js'));
 
 app.get('*', (req, res) => {res.sendFile(path.join(__dirname, '../public/index.html'))});
 

@@ -27,9 +27,30 @@ export const thunkGetAmount = (name) => {
     )
 };
 
-//отправка запроса на изменение
-export const thunkSendData = (e, active) => {
-    console.log('thunk', e.target.value, active.cell)
+//запрос страницы отчета
+export const thunkGetReport = () => {
+    return (
+        (dispatch) => {
+            getReport(dispatch);
+        }
+    )
+};
+
+//отправка запроса на изменение /событие потеря фокуса
+export const thunkSendData = (e) => {
+    //подготовка данных к отправке на сервер
+    const value = e.target.value;
+    if (value === '') return false;
+    const cell = e.target.parentNode.cellIndex;
+    const id = e.target.parentNode.parentNode.id;
+    const table = e.target.parentNode.parentNode.parentNode.parentNode.id;
+    const data = {
+        table: table,
+        value: value,
+        id: +id,
+        cell: cell
+    };
+
     return (
         (dispatch) => {
             sendData(dispatch, data);

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { HeadTable } from '../components/HeadTable.jsx';
-import { BodyTable } from '../components/BodyTable.jsx';
-import { FormEnd } from "../components/FormEnd.jsx";
+import { HeadTable } from './HeadTable.jsx';
+import { BodyTable } from './BodyTable.jsx';
+import { FormEnd } from "./FormEnd.jsx";
 import { handleClick, handleChange } from '../actions/index.js';
 import { thunkGetBody, thunkGetSetting, thunkGetAmount, thunkSendData } from '../requests/thunk.js'
 
@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
 	thunkGetBody: (name) => dispatch(thunkGetBody(name)),
 	thunkGetSetting: (name) => dispatch(thunkGetSetting(name)),
 	thunkGetAmount: (name) => dispatch(thunkGetAmount(name)),
-	handleBlur: (e, {active}) => dispatch(thunkSendData(e, active))
+	handleBlur: (e) => dispatch(thunkSendData(e))
 
 });
 

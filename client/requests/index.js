@@ -34,15 +34,25 @@ export const getBody = (dispatch, name) => {
             })
 };
 
-//отправка данных на сервер
+//отправка изменений на сервер
 export const sendData = (dispatch, data) => {
-    console.log('request')
     request
         .post('/data')
         .send(data)
         .end((err, res) => {
             if (err) dispatch(actionReq.error(err));
-            console.log('request otvet')
-            dispatch(actionReq.SendOK(res.body))
+            console.log(res.body)
+            if (res.body === {}) dispatch(actionReq.NewStr());
+            else dispatch(actionReq.SendOK(res.body))
+        })
+};
+
+//запрос отчета
+export const getReport = (dispatch) => {
+    request
+        .get('/report')
+        .end((err,res) => {
+            if (err) dispatch(actionReq.error(err));
+            dispatch(actionReq.ReportOK(res.body))
         })
 };

@@ -14,10 +14,20 @@ router.get('/amount/:name', (req, res) => {
     })
 });
 
+// запрос report отчет
+router.get('/report', (req, res) => {
+
+    Models.getReport().then(answer =>{
+        const amount = answer[0];
+        //res.send(amount);
+        console.log(answer);
+    })
+});
+
 //запрос body таблицы по name
 router.get('/body/:name', (req, res) => {
-
 	const name = req.params.name;
+
     Models.getBody(name).then(table => {
         //преобразование из массива объектов, в двумерный массив.
     	let body = [],
@@ -49,26 +59,54 @@ router.get('/setting/:name', (req, res) => {
 	})
 });
 
-//внесение изменений в таблицу
+//запрос изменений в таблицу
 router.post('/data', (req, res) => {
-    console.log('сервер')
     const data = req.body;
-    const name = data[0];
-    const row = data[2]; //[0]- позиция строки на клиенте [1] сама строка;
-
-
-    Models.sendData(name, row).then(newRow => {
-
-        console.log(newRow)
-    });
+	const table = data.table; //имя таблицы
+	const id = data.id; //id строки для изменения
+	let newdata = {};
+    //формируем поле и значение для изменения в sql
+	switch(table){
+		case 'sale':
+		case 'intrans':
+		case 'outtrans':
+			newdata[['#','name', 'price', 'vol'][data.cell]] = data.value;
+			break;
+		case 'end':
+		case 'begin':
+			newdata['vol'] = data.value;
+			break;
+	}
+	//внесение изменений,
+    //запрос суммы последней строки таблицы, если !=0, добавим новую пустую строку
+    Models.sendData(table, newdata, id).then(answer => {
+        console.log(answer)
+        if (answer[0].sum !== null) {
+            Models.addString(table).then(answer => {
+                console.log('строка доб')
+                let string = {};
+                res.send(string)
+            })
+        } else { //запрос всей строки, после изменений
+            Models.getBody(table, {id: id}).then(answer =>{
+                let string = answer[0];
+                res.send(string)
+            });
+        }
+    })
 });
 
-//временная функ для тестов
-router.get('/formend', (req,res) => {
-
+//запись полей Модуль и Инкассация
+router.get('/oper', (req,res) => {
+    const data = {
+        modul: req.query.modul,
+        incass: req.query.incass
+        };
 	console.log(req.query, req.query.modul, req.query.incass)
-	//Models.openDay();
-
+	Models.oper(data).then(answer => {
+	    console.log('vse');
+	    res.send(answer)
+    })
 });
 
 module.exports = router;

@@ -18,5 +18,7 @@ export const REQ = {
     BODY: "BODY",
     ERROR: "ERROR",
     SETTING: "SETTING",
-    SEND: "SEND"
+    SEND: "SEND",
+    NEW: "NEW",
+    REPORT: "REPORT"
 };

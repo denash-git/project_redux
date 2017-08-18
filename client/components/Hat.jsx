@@ -29,6 +29,7 @@ class Hat extends React.Component {
                     <li><a href="/end">Конец дня</a></li>
                     <li><a href="/report">Отчет</a></li>
                 </ul>
+                <br></br>
             </div>
         );
     }
