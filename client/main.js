@@ -6,19 +6,19 @@ import { BrowserRouter, Match, Route} from 'react-router-dom';
 import thunk from 'redux-thunk';
 
 import App from './components/App.jsx';
-import Hat from './components/Hat.jsx';
+import {Hat} from './components/Hat.jsx';
 import Report from './components/Report.jsx';
 import * as reducers from './reducers/reducer.js';
 
 const store = createStore(combineReducers(reducers), applyMiddleware(thunk));
 
     render(
-        <Provider store={store}>
+        <Provider store = {store}>
             <BrowserRouter>
                 <div>
-                    <Hat />
-                    <Route path='/:name' component={App}/>
-                    <Route path='/report' component={Report}/>
+                    <Route path = '/' component = {Hat} />
+                    <Route path = '/list/:name' component = {App} />
+                    <Route path = '/report' component = {Report} />
                 </div>
             </BrowserRouter>
         </Provider>,

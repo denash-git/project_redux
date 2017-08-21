@@ -72,24 +72,26 @@ export const reducer = (state = initialState, action) => {
 
         case REQ.NEW:
             location.reload();
-            return state;
+            return Object.assign({}, state);
 
         case REQ.SEND:
+
             const obj = action.obj; //объект с новой строкой
             const id = obj.id; // id строки для изменения
             const sum = obj.sum; //сумма новая
             let sum_old = 0; //будет старая сумма для расчета коррекции ИТОГО
-            body.map((item) => {
+            body.map((item, index) => {
             //пробег по таблице , ищем id
                 if (item[0] === id) {
                     //нашли, забрали старую цену, положили новую
-                    sum_old = item[item.length-1];
-                    item[item.length-1] = sum
+                   sum_old = body[index][item.length-1];
+                   body[index][item.length-1] = sum;
                 }
             });
             let {amount} = state;
             amount = amount + sum - sum_old; //коррекция ИТОГО
-            return Object.assign({}, state);
+            return Object.assign({}, state, {amount}, {body});
+
 
         default:
             return state

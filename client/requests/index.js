@@ -41,18 +41,19 @@ export const sendData = (dispatch, data) => {
         .send(data)
         .end((err, res) => {
             if (err) dispatch(actionReq.error(err));
-            console.log(res.body)
-            if (res.body === {}) dispatch(actionReq.NewStr());
-            else dispatch(actionReq.SendOK(res.body))
+            if (res.body[1].sum !== null) dispatch(actionReq.NewStr());
+            else dispatch(actionReq.SendOK(res.body[0]))
         })
 };
 
 //запрос отчета
 export const getReport = (dispatch) => {
     request
-        .get('/report')
+        .get('/log')
         .end((err,res) => {
+            console.log('err', err)
             if (err) dispatch(actionReq.error(err));
+            console.log('ответ ', res.body)
             dispatch(actionReq.ReportOK(res.body))
         })
 };

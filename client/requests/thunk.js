@@ -1,4 +1,4 @@
-import { getBody, getSetting, getAmount, sendData } from "./index.js";
+import { getBody, getSetting, getAmount, sendData, getReport } from "./index.js";
 
 //запрос тела таблицы
 export const thunkGetBody = (name) => {

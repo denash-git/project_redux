@@ -44,6 +44,7 @@ class App extends React.Component {
         if (this.props.name === 'end') {Form=<FormEnd />}
 
         return (
+
 			<div className="container col-7 row">
 
 				<h4>{this.props.setting.caption}</h4>
@@ -70,3 +71,4 @@ class App extends React.Component {
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+

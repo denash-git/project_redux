@@ -62,6 +62,24 @@ exports.getAmount = (name) => {
     })
 };
 
+//обработка отчета
+exports.getReport = () => {
+    return new Promise((resolve, reject) => {
+
+        db.get().query('SELECT SUM(price*vol) AS begin FROM begin WHERE 1;' +
+            'SELECT SUM(price*vol) AS sale FROM sale WHERE 1;' +
+            'SELECT SUM(price*vol) AS intrans FROM intrans WHERE 1;' +
+            'SELECT SUM(price*vol) AS outtrans FROM outtrans WHERE 1;' +
+            'SELECT SUM(price*vol) AS end FROM end WHERE 1;' +
+            'SELECT modul FROM oper WHERE 1;' +
+            'SELECT incass FROM oper WHERE 1',
+            (err, answer) => {
+                if (err) reject(err);
+                resolve(answer);
+            });
+    })
+};
+
 //внесение изменений в таблицу
 //table имя таблицы | data- объект, ключ это имя поля) | id - уникальное значение
 exports.sendData = (table, data, id) => {
@@ -87,18 +105,6 @@ exports.oper = (data) => {
             });
     })
 };
-
-//выборка максимального id в таблице и его суммы
-// exports.maxId = (name) => {
-//     return new Promise((resolve, reject) => {
-//
-//         db.get().query('SELECT id, price*vol AS sum FROM ?? ORDER BY id DESC LIMIT 1', name,
-//             (err, answer) => {
-//                 if (err) reject(err);
-//                 resolve(answer);
-//             });
-//     })
-// };
 
 //добавление пустой строки
 exports.addString = (name) => {

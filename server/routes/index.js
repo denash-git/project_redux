@@ -15,12 +15,24 @@ router.get('/amount/:name', (req, res) => {
 });
 
 // запрос report отчет
-router.get('/report', (req, res) => {
-
-    Models.getReport().then(answer =>{
-        const amount = answer[0];
-        //res.send(amount);
-        console.log(answer);
+router.get('/log', (req, res) => {
+    let report = {
+            result: 0,
+            report: ''
+    };
+    //запрос всех ИТОГО по всем таблицам
+    Models.getReport().then(answer => {
+        // преобразование многомерного массива в 1 объект
+         answer.map((item) => {
+             Object.assign(report, item[0]);
+         });
+        //формирование выводов относитьлно кассы
+        report.result = report.begin + report.sale - report.outtrans +
+            report.intrans - report.end + report.modul - report.incass;
+        if (Math.abs(report.result) === report.result) report.report = 'Балланс + , У Вас недосдача в кассе !';
+        else report.report = 'Балланс - , у Вас излишек в кассе, что - то не записано!';
+        if (report.result === 0)  report.report = 'Ваш балланс по кассе 0, все отлично!';
+        res.send(report);
     })
 });
 
@@ -51,7 +63,7 @@ router.get('/setting/:name', (req, res) => {
 
     const name = req.params.name;
 	Models.getSetting(name).then(setting =>{
-		//конвертирование ключей в массивы
+		//конвертирование текст в массив
         setting[0].head = setting[0].head.split(',');
         setting[0].profil = setting[0].profil.split(',');
         setting[0].type = setting[0].type.split(',');
@@ -77,21 +89,25 @@ router.post('/data', (req, res) => {
 			newdata['vol'] = data.value;
 			break;
 	}
-	//внесение изменений,
-    //запрос суммы последней строки таблицы, если !=0, добавим новую пустую строку
-    Models.sendData(table, newdata, id).then(answer => {
-        console.log(answer)
-        if (answer[0].sum !== null) {
-            Models.addString(table).then(answer => {
-                console.log('строка доб')
-                let string = {};
-                res.send(string)
+	//1 внесение изменений,
+    //2 запрос суммы последней строки таблицы,
+    Models.sendData(table, newdata, id).then(lastSum => {
+
+        //отмена добавления строки
+        if (table === 'begin' || table ===  'end') lastSum[0].sum = null;
+        let result = lastSum[0].sum !== null;
+
+        //запрос всей строки, после изменений
+        Models.getBody(table, {id: id}).then(strFull =>{
+            let string = [strFull[0], lastSum[0]];
+            res.send(string)
+        });
+
+        //если сумма последней строки не пустая, добавим новую пустую строку
+        if (result) {
+            Models.addString(table).then(add => {
+                console.log('строку добавили', add)
             })
-        } else { //запрос всей строки, после изменений
-            Models.getBody(table, {id: id}).then(answer =>{
-                let string = answer[0];
-                res.send(string)
-            });
         }
     })
 });

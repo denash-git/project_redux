@@ -7,7 +7,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    thunkGetReport: () => dispatch(thunkGetReport()),
+    thunkGetReport: () => dispatch(thunkGetReport())
 });
 
 class Report extends React.Component {
@@ -22,18 +22,18 @@ class Report extends React.Component {
     render() {
 
         return (
-            <div>
+            <div className="report">
                 <br />
-                <p>На начало дня : {this.props.report.begin}</p>
-                <p>Продаж : {this.props.report.sale}</p>
-                <p>Расход : {this.props.report.outtrans}</p>
-                <p>Приход : {this.props.report.intrans}</p>
-                <p>На конец дня : {this.props.report.end}</p>
-                <p>Платежи: {this.props.report.modul}</p>
-                <p>Инкассация : {this.props.report.inkass}</p>
-                <p>Балланс дня : {this.props.report.result}</p>
+                <p>На начало дня : {this.props.report.begin} руб.</p>
+                <p>Продаж : {this.props.report.sale} руб.</p>
+                <p>Расход : {this.props.report.outtrans} руб.</p>
+                <p>Приход : {this.props.report.intrans} руб.</p>
+                <p>На конец дня : {this.props.report.end} руб.</p>
+                <p>Платежи: {this.props.report.modul} руб.</p>
+                <p>Инкассация : {this.props.report.incass} руб.</p>
+                <p><b>Балланс дня : {this.props.report.result} руб.</b></p>
                 <br />
-                <p>Вывод : {this.props.report.report}</p>
+                <p><b><i>Вывод : {this.props.report.report}</i></b></p>
             </div>
         )
     }
