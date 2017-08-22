@@ -57,3 +57,16 @@ export const getReport = (dispatch) => {
             dispatch(actionReq.ReportOK(res.body))
         })
 };
+
+//отправка из формы данных modul и incass
+export const getOper = (modul, incass) => {
+    const str = "?modul="+modul+"&incass="+incass;
+    request
+        .get(`/oper/${str}`)
+        .end((err,res) => {
+            console.log('err', err)
+            //if (err) dispatch(actionReq.error(err));
+            console.log('ответ ', res.body)
+           // dispatch(actionReq.ReportOK(res.body))
+        })
+};

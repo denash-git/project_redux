@@ -22,7 +22,7 @@ class Report extends React.Component {
     render() {
 
         return (
-            <div className="report">
+            <div className="container">
                 <br />
                 <p>На начало дня : {this.props.report.begin} руб.</p>
                 <p>Продаж : {this.props.report.sale} руб.</p>

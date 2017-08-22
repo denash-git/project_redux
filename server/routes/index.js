@@ -53,7 +53,6 @@ router.get('/body/:name', (req, res) => {
 			}
 			body.push(bodyTemp);
 		});
-        console.log(body)
 		res.send(body);
     });
 });

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { HeadTable } from './HeadTable.jsx';
 import { BodyTable } from './BodyTable.jsx';
-import { FormEnd } from "./FormEnd.jsx";
+import  FormEnd  from "./FormEnd.jsx";
 import { handleClick, handleChange } from '../actions/index.js';
 import { thunkGetBody, thunkGetSetting, thunkGetAmount, thunkSendData } from '../requests/thunk.js'
 
@@ -45,7 +45,7 @@ class App extends React.Component {
 
         return (
 
-			<div className="container col-7 row">
+			<div className="container">
 
 				<h4>{this.props.setting.caption}</h4>
 

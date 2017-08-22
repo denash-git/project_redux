@@ -3,15 +3,13 @@ import React from 'react';
 export const Hat = () => {
 
     return (
-        <div>
-            <ul>
-                <li><a href="/list/begin">Начало дня</a></li>
-                <li><a href="/list/sale">Продажи</a></li>
-                <li><a href="/list/outtrans">Расход</a></li>
-                <li><a href="/list/intrans">Приход</a></li>
-                <li><a href="/list/end">Конец дня</a></li>
-                <li><a href="/report">Отчет</a></li>
-            </ul>
+        <div className="container">
+                <a className="btn btn-secondary" href="/list/begin">Начало дня</a>
+                <a className="btn btn-secondary" href="/list/sale">Продажи</a>
+                <a className="btn btn-secondary" href="/list/outtrans">Расход</a>
+                <a className="btn btn-secondary" href="/list/intrans">Приход</a>
+                <a className="btn btn-secondary" href="/list/end">Конец дня</a>
+                <a className="btn btn-secondary" href="/report">Отчет</a>
             <br></br>
         </div>
     );

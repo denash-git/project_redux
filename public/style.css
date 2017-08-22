@@ -1,29 +1,35 @@
-div ul {
-	list-style: none; /*убираем маркеры списка*/
-	margin: 0; /*убираем отступы*/
-	padding-left: 25; /*убираем отступы*/
-	margin-top:30px; /*делаем отступ сверху*/
-}
-div a {
-	text-decoration: none; /*убираем подчеркивание текста ссылок*/
-	background:lightgrey; /*добавляем фон к пункту меню*/
-	color:black; /*меняем цвет ссылок*/
-	padding:10px; /*добавляем отступ*/
-	border-radius:2px; /*добавляем скругление*/
-	-moz-transition: all 0.3s 0.01s ease; /*делаем плавный переход*/
-	-o-transition: all 0.3s 0.01s ease;
-	-webkit-transition: all 0.3s 0.01s ease;
-}
-div a:hover {
-	background:gray;/*добавляем эффект при наведении*/
-	color:white;
-}
-div li {
-	float:left; /*Размещаем список горизонтально для реализации меню*/
-	margin-right:10px; /*Добавляем отступ у пунктов меню*/
-}
+/*div ul {*/
+	/*list-style: none; !*убираем маркеры списка*!*/
+	/*margin: 0; !*убираем отступы*!*/
+	/*padding-left: 25; !*убираем отступы*!*/
+	/*margin-top:30px; !*делаем отступ сверху*!*/
+/*}*/
+/*div a {*/
+	/*text-decoration: none; !*убираем подчеркивание текста ссылок*!*/
+	/*background:lightgrey; !*добавляем фон к пункту меню*!*/
+	/*color:black; !*меняем цвет ссылок*!*/
+	/*padding:10px; !*добавляем отступ*!*/
+	/*border-radius:2px; !*добавляем скругление*!*/
+	/*-moz-transition: all 0.3s 0.01s ease; !*делаем плавный переход*!*/
+	/*-o-transition: all 0.3s 0.01s ease;*/
+	/*-webkit-transition: all 0.3s 0.01s ease;*/
+/*}*/
+/*div a:hover {*/
+	/*background:gray;!*добавляем эффект при наведении*!*/
+	/*color:white;*/
+/*}*/
+/*div li {*/
+	/*float:left; !*Размещаем список горизонтально для реализации меню*!*/
+	/*margin-right:10px; !*Добавляем отступ у пунктов меню*!*/
+/*}*/
 
 .report {
 	width: 800px;
 	margin: 25px 50px;
 }
+
+/*form {*/
+	/*width: 500px;*/
+	/*margin: 25px 50px;*/
+	/*background-color: lightgrey;*/
+/*}*/
