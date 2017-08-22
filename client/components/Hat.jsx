@@ -3,7 +3,7 @@ import React from 'react';
 export const Hat = () => {
 
     return (
-        <div className="hat">
+        <div>
             <ul>
                 <li><a href="/list/begin">Начало дня</a></li>
                 <li><a href="/list/sale">Продажи</a></li>
