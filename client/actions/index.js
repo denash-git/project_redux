@@ -27,10 +27,12 @@ export const handleChange = (e) => {
     switch (+key) {
         case 13:
 
+            //$('#11').trigger('click');
+           console.log(e.target.parentNode.id)
             return {type: KEYBOARD.ENTER};
 
         case 9:
-            e.preventDefault();
+            e.stopPropagation();
             return {type: KEYBOARD.TAB};
 
         case 38:

@@ -64,9 +64,7 @@ export const getOper = (modul, incass) => {
     request
         .get(`/oper/${str}`)
         .end((err,res) => {
-            console.log('err', err)
-            //if (err) dispatch(actionReq.error(err));
+            if (err) console.log(err);
             console.log('ответ ', res.body)
-           // dispatch(actionReq.ReportOK(res.body))
         })
 };

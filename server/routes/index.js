@@ -105,7 +105,7 @@ router.post('/data', (req, res) => {
         //если сумма последней строки не пустая, добавим новую пустую строку
         if (result) {
             Models.addString(table).then(add => {
-                console.log('строку добавили', add)
+
             })
         }
     })
@@ -117,7 +117,6 @@ router.get('/oper', (req,res) => {
         modul: req.query.modul,
         incass: req.query.incass
         };
-	console.log(req.query, req.query.modul, req.query.incass)
 	Models.oper(data).then(answer => {
 	    console.log('vse');
 	    res.send(answer)

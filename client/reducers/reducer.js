@@ -18,6 +18,8 @@ export const reducer = (state = initialState, action) => {
         case KEYBOARD.ENTER:
 
             //active.id = '';
+
+            console.log('enter', active)
             return Object.assign({}, state, {active});
 
         case KEYBOARD.TAB:
@@ -72,10 +74,10 @@ export const reducer = (state = initialState, action) => {
 
         case REQ.NEW:
             location.reload();
+            //this.forceUpdate();
             return Object.assign({}, state);
 
         case REQ.SEND:
-
             const obj = action.obj; //объект с новой строкой
             const id = obj.id; // id строки для изменения
             const sum = obj.sum; //сумма новая

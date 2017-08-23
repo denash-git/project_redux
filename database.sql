@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Авг 18 2017 г., 14:15
+-- Время создания: Авг 23 2017 г., 13:47
 -- Версия сервера: 10.2.7-MariaDB
 -- Версия PHP: 7.1.8
 
@@ -32,7 +32,7 @@ CREATE TABLE `begin` (
   `id` int(11) NOT NULL,
   `nominal` varchar(8) NOT NULL,
   `price` smallint(6) NOT NULL,
-  `vol` tinyint(4) NOT NULL,
+  `vol` smallint(6) NOT NULL,
   `data` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -41,12 +41,12 @@ CREATE TABLE `begin` (
 --
 
 INSERT INTO `begin` (`id`, `nominal`, `price`, `vol`, `data`) VALUES
-(1, '5000 р.', 5000, 0, '2017-08-06'),
+(1, '5000 р.', 5000, 1, '2017-08-06'),
 (2, '1000 р.', 1000, 0, '2017-08-06'),
 (3, '500 р.', 500, 4, '2017-08-06'),
-(4, '100 р.', 100, 6, '2017-08-06'),
-(5, '50 р.', 50, 1, '2017-08-06'),
-(6, 'мелочь', 1, 0, '2017-08-06');
+(4, '100 р.', 100, 4, '2017-08-06'),
+(5, '50 р.', 50, 3, '2017-08-06'),
+(6, 'мелочь', 1, 789, '2017-08-06');
 
 -- --------------------------------------------------------
 
@@ -58,7 +58,7 @@ CREATE TABLE `end` (
   `id` int(11) NOT NULL,
   `nominal` varchar(8) NOT NULL,
   `price` smallint(6) NOT NULL,
-  `vol` tinyint(4) NOT NULL,
+  `vol` smallint(6) NOT NULL,
   `data` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -85,7 +85,7 @@ CREATE TABLE `intrans` (
   `date` date NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` smallint(6) DEFAULT NULL,
-  `vol` tinyint(4) DEFAULT NULL
+  `vol` smallint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -93,7 +93,8 @@ CREATE TABLE `intrans` (
 --
 
 INSERT INTO `intrans` (`id`, `date`, `name`, `price`, `vol`) VALUES
-(1, '2017-08-06', 'подкрепление разменной д/с', 1745, 1);
+(1, '2017-08-06', 'подкрепление разменной д/с', 1745, 1),
+(2, '2017-08-18', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -113,7 +114,7 @@ CREATE TABLE `oper` (
 --
 
 INSERT INTO `oper` (`id`, `date`, `modul`, `incass`) VALUES
-(1, '2017-08-17', 758, 758);
+(1, '2017-08-17', 558, 478);
 
 -- --------------------------------------------------------
 
@@ -126,7 +127,7 @@ CREATE TABLE `outtrans` (
   `date` date NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` smallint(6) DEFAULT NULL,
-  `vol` tinyint(4) DEFAULT NULL
+  `vol` smallint(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -135,7 +136,8 @@ CREATE TABLE `outtrans` (
 
 INSERT INTO `outtrans` (`id`, `date`, `name`, `price`, `vol`) VALUES
 (1, '2017-08-06', 'оплата груза по ТБ №123/2345, КБ 456', 240, 3),
-(2, '2017-08-06', 'аренда помещения ', 2400, 2);
+(2, '2017-08-06', 'аренда помещения ', 2400, 2),
+(3, '2017-08-18', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -148,7 +150,7 @@ CREATE TABLE `sale` (
   `date` date NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` smallint(6) DEFAULT NULL,
-  `vol` tinyint(4) DEFAULT NULL
+  `vol` smallint(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -156,12 +158,17 @@ CREATE TABLE `sale` (
 --
 
 INSERT INTO `sale` (`id`, `date`, `name`, `price`, `vol`) VALUES
-(1, '2017-08-06', 'Батарейка ААА', 250, 2),
+(1, '2017-08-06', 'Батарейка ААА', 250, 1),
 (2, '2017-08-06', 'Элемент ск20', 46, 6),
-(4, '2017-08-06', 'Спинер', 80, 1),
-(6, '2017-08-18', 'Чехол красный', 85, 1),
-(13, '2017-08-18', 'чехол', 785, 8),
-(14, '2017-08-18', NULL, NULL, NULL);
+(4, '2017-08-06', 'Спинер', 80, 5),
+(6, '2017-08-18', 'Чехол2', 85, 3),
+(13, '2017-08-18', 'чехол2', 85, 10),
+(14, '2017-08-18', 'проверка', 50, 5),
+(19, '2017-08-18', 'uuакб', 78, 2),
+(20, '2017-08-18', 'clo', 89, 1),
+(21, '2017-08-18', NULL, 50, 1),
+(22, '2017-08-18', NULL, 89, 8),
+(23, '2017-08-18', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -254,7 +261,7 @@ ALTER TABLE `end`
 -- AUTO_INCREMENT для таблицы `intrans`
 --
 ALTER TABLE `intrans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `oper`
 --
@@ -264,12 +271,12 @@ ALTER TABLE `oper`
 -- AUTO_INCREMENT для таблицы `outtrans`
 --
 ALTER TABLE `outtrans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT для таблицы `sale`
 --
 ALTER TABLE `sale`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT для таблицы `setting`
 --
