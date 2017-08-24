@@ -12,40 +12,36 @@ export const reducer = (state = initialState, action) => {
     let  {active} = state;
     let {row} = state.active;
     let {body} = state;
+    let {profil} = state.setting;
+    let {type} = state.setting;
+    let {cell} = state.active; //активные координаты таблицы
     // обработка клавиатуры =========================================
     switch (action.type) {
 
         case KEYBOARD.ENTER:
 
-            //active.id = '';
+            if (profil[cell+1] === '0') {cell = 1; row = row + 1}
+            //if (body.length <= row) {row = active.row};
 
+            const type_ = type[cell+1];
+            active = {
+                id: row +''+ cell,
+                row: row,
+                cell: cell+1,
+                table: active.table,
+                type: type_};
             console.log('enter', active)
-            return Object.assign({}, state, {active});
-
-        case KEYBOARD.TAB:
-
-            console.log("TAB");
-            return state;
-
-        case KEYBOARD.KEY_UP:
-
-            console.log("UP");
             return Object.assign({}, state, {active});
 
         case KEYBOARD.VALUE:
             const key = action.value; //текущий нажатый символ
-            const {cell} = state.active; //активные координаты таблицы
             //тело таблицы получили в шапке
             body[row][cell] = key; // внесли нажатый символ в ячекйку
             return Object.assign({}, state, {body});
 
-        // !!внимание: добавить, если заполнится последняя строка, добавить следующую
-
 //  обработка Мышки ====================================================
         case MOUSE.CLICK:
             active = action.active;
-            const {profil} = state.setting;
-            const {type} = state.setting;
             //определяем тип у активной ячейки для ввода(text/number)
             active.type = type[active.cell];
             //если ячейку нельзя редактировать => деактивировать id
@@ -73,9 +69,12 @@ export const reducer = (state = initialState, action) => {
             return Object.assign({}, state);
 
         case REQ.NEW:
-            location.reload();
-            //this.forceUpdate();
-            return Object.assign({}, state);
+            //location.reload();
+            const data = action.data;
+            //форм. новой следующей строки
+            const str = [data.id+1, body.length+1, null, null, null, null];
+            body.push(str);
+            return Object.assign({}, state, {body});
 
         case REQ.SEND:
             const obj = action.obj; //объект с новой строкой
@@ -93,7 +92,6 @@ export const reducer = (state = initialState, action) => {
             let {amount} = state;
             amount = amount + sum - sum_old; //коррекция ИТОГО
             return Object.assign({}, state, {amount}, {body});
-
 
         default:
             return state

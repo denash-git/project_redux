@@ -41,8 +41,10 @@ export const sendData = (dispatch, data) => {
         .send(data)
         .end((err, res) => {
             if (err) dispatch(actionReq.error(err));
-            if (res.body[1].sum !== null) dispatch(actionReq.NewStr());
-            else dispatch(actionReq.SendOK(res.body[0]))
+            //на правку изменненной строки
+            dispatch(actionReq.SendOK(res.body[0]));
+            //если у вторго объекта, сумм не ноль, необх добавить новую строку
+            if (res.body[1].sum !== null) dispatch(actionReq.NewStr(res.body[1]));
         })
 };
 

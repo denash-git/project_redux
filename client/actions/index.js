@@ -26,17 +26,10 @@ export const handleChange = (e) => {
     const value = e.target.value;
     switch (+key) {
         case 13:
-
             //$('#11').trigger('click');
-           console.log(e.target.parentNode.id)
+            $('input').blur();
+           console.log('#'+e.target.parentNode.id)
             return {type: KEYBOARD.ENTER};
-
-        case 9:
-            e.stopPropagation();
-            return {type: KEYBOARD.TAB};
-
-        case 38:
-            return {type: KEYBOARD.KEY_UP};
 
         default: return {
             type: KEYBOARD.VALUE,
@@ -48,7 +41,7 @@ export const handleChange = (e) => {
 // экшен REGUEST ===========================================================
 export const actionReq =  {
         ReportOK: (report) => ({type: REQ.REPORT, report}),
-        NewStr: () => ({type: REQ.NEW}),
+        NewStr: (data) => ({type: REQ.NEW, data}),
         SendOK: (obj) => ({type: REQ.SEND, obj}),
         SettingOK: (setting) => ({type: REQ.SETTING, setting}),
         BodyOK: (body) => ({type: REQ.BODY, body}),
