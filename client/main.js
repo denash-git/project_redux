@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import App from './components/App.jsx';
 import {Hat} from './components/Hat.jsx';
 import Report from './components/Report.jsx';
+import Admin from './components/Admin.jsx';
 import * as reducers from './reducers/reducer.js';
 
 const store = createStore(combineReducers(reducers), applyMiddleware(thunk));
@@ -16,9 +17,11 @@ const store = createStore(combineReducers(reducers), applyMiddleware(thunk));
         <Provider store = {store}>
             <BrowserRouter>
                 <div>
+
                     <Route path = '/' component = {Hat} />
                     <Route path = '/list/:name' component = {App} />
                     <Route path = '/report' component = {Report} />
+                    <Route path = '/admin' component = {Admin} />
                 </div>
             </BrowserRouter>
         </Provider>,

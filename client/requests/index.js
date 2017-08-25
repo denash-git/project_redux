@@ -53,9 +53,7 @@ export const getReport = (dispatch) => {
     request
         .get('/log')
         .end((err,res) => {
-            console.log('err', err)
             if (err) dispatch(actionReq.error(err));
-            console.log('ответ ', res.body)
             dispatch(actionReq.ReportOK(res.body))
         })
 };

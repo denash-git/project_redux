@@ -118,7 +118,6 @@ router.get('/oper', (req,res) => {
         incass: req.query.incass
         };
 	Models.oper(data).then(answer => {
-	    console.log('vse');
 	    res.send(answer)
     })
 });

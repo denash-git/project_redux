@@ -142,14 +142,3 @@ exports.addString = (name) => {
 //             })
 //     });
 // };
-
-//ф собирает текущую дату для запросов к SQL
-// function todayData() {
-//     let data = new Date();
-//     const year = data.getFullYear();
-//     const month = data.getMonth();
-//     const day = data.getDate();
-//     data = year+'-'+month+'-'+day;
-//     return data
-// }
-
