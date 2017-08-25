@@ -17,7 +17,6 @@ const store = createStore(combineReducers(reducers), applyMiddleware(thunk));
         <Provider store = {store}>
             <BrowserRouter>
                 <div>
-
                     <Route path = '/' component = {Hat} />
                     <Route path = '/list/:name' component = {App} />
                     <Route path = '/report' component = {Report} />

@@ -24,6 +24,7 @@ class Report extends React.Component {
         return (
             <div className="container">
                 <br />
+                <h4>Отчёт</h4>
                 <p>На начало дня : {this.props.report.begin} руб.</p>
                 <p>Продаж : {this.props.report.sale} руб.</p>
                 <p>Расход : {this.props.report.outtrans} руб.</p>
