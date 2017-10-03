@@ -1,1 +1,1 @@
-# project_redux
+# project_redux выпускная работа
